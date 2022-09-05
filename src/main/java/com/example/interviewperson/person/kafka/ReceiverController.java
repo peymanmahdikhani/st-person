@@ -20,19 +20,19 @@ import java.util.stream.StreamSupport;
 @RestController
 @Slf4j
 public class ReceiverController {
-    @KafkaListener(topics = "chat", clientIdPrefix = "json", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${app.person.topic-name}", clientIdPrefix = "json", containerFactory = "kafkaListenerContainerFactory")
     public void listenAsObject(ConsumerRecord<String, PracticalAdvice> cr, @Payload PracticalAdvice payload) {
         log.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
                 typeIdHeader(cr.headers()), payload, cr.toString());
     }
 
-    @KafkaListener(topics = "chat", clientIdPrefix = "string", containerFactory = "kafkaListenerStringContainerFactory")
+    @KafkaListener(topics = "${app.person.topic-name}", clientIdPrefix = "string", containerFactory = "kafkaListenerStringContainerFactory")
     public void listenasString(ConsumerRecord<String, String> cr, @Payload String payload) {
         log.info("Logger 2 [String] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
                 typeIdHeader(cr.headers()), payload, cr.toString());
     }
 
-    @KafkaListener(topics = "chat", clientIdPrefix = "bytearray", containerFactory = "kafkaListenerByteArrayContainerFactory")
+    @KafkaListener(topics = "${app.person.topic-name}", clientIdPrefix = "bytearray", containerFactory = "kafkaListenerByteArrayContainerFactory")
     public void listenAsByteArray(ConsumerRecord<String, byte[]> cr,
                                   @Payload byte[] payload) {
         log.info("Logger 3 [ByteArray] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
